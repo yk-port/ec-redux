@@ -2,15 +2,20 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 import createStore from './reducks/sotre/store';
+import { ConnectedRouter } from 'connected-react-router';
+import * as History from 'history';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 
+const history = History.createBrowserHistory();
 export const store = createStore();
 
 ReactDOM.render(
   <Provider store={store}>
-    <App />
+    <ConnectedRouter History={history}>
+      <App />
+    </ConnectedRouter>
   </Provider>,
   document.getElementById('root')
 );
