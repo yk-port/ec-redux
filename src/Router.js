@@ -1,6 +1,6 @@
 import React from 'react';
 import { Route, Switch } from 'react-router';
-import { Login, Home } from './template';
+import { Login, Home } from './templates';
 
 const Router = () => {
   return (
