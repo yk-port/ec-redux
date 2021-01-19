@@ -9,11 +9,11 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 
 const history = History.createBrowserHistory();
-export const store = createStore();
+export const store = createStore(history);
 
 ReactDOM.render(
   <Provider store={store}>
-    <ConnectedRouter History={history}>
+    <ConnectedRouter history={history}>
       <App />
     </ConnectedRouter>
   </Provider>,
