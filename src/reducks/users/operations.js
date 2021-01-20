@@ -10,7 +10,7 @@ export const signIn = () => {
       const url = 'https://api.github.com/users/yk-port';
 
       const response = await fetch(url)
-                              .then(res => res.json)
+                              .then(res => res.json())
                               .catch(() => null);
       const userName = response.login;
 
