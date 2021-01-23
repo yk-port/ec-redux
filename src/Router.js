@@ -1,13 +1,12 @@
 import React from 'react';
 import { Route, Switch } from 'react-router';
-import { Login, Home } from './templates';
-import { LoginContainer } from './containers';
+import { SignUp, Login, Home } from './templates';
 
 const Router = () => {
   return (
     <Switch>
-      <Route exact path={"/login"} component={LoginContainer}></Route>
-      {/* <Route exact path={"/login"} component={Login}></Route> */}
+      <Route exact path={"/signup"} component={SignUp}></Route>
+      <Route exact path={"/login"} component={Login}></Route>
       <Route exact path={"(/)?"} component={Home}></Route>
     </Switch>
   )
