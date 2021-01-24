@@ -7,10 +7,11 @@ import { auth, db, FirebaseTimestamp } from '../../firebase';
 // もしユーザーが存在していたら、signInActionを動かしてreduxのstateを更新してログインしている扱いにする
 export const listenAuthState = () => {
   return async (dispatch) => {
+    // 戻り値をuserと定義して受け取る
     return auth.onAuthStateChanged(user => {
-      // userが存在してる 即ち userの認証が完了している
+      // userが存在してる 即ち userの認証が完了していれば、ユーザーの情報を取得してReduxのStoreの値を更新する
       if (user) {
-        console.log(user);
+
         const uid = user.uid;
 
         db.collection('users').doc(uid).get()
@@ -27,7 +28,7 @@ export const listenAuthState = () => {
             dispatch(push('/'))
           })
       } else {
-        // もしユーザーが存在していなかったら 即ち ログインしていなかったら、ログインページにリダイレクトさせる
+        // もしユーザーが存在していなかったら 即ち ユーザーが認証されていなかったら、ログインページにリダイレクトさせる
         dispatch(push('/login'))
       }
     })
