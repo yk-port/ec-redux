@@ -70,6 +70,17 @@ export const login = (email, password) => {
   }
 }
 
+export const logout = () => {
+  return async (dispatch) => {
+    // サインアウトする 即ち ReduxのStoreの値を初期化すること
+    // firebaseでサインアウトするためのメソッドがあるのでそれを使う
+    auth.signOut()
+      .then(() => {
+        dispatch(push('/login'))
+      })
+  }
+}
+
 export const signUp = (username, email, password, confirmPassword) => {
   return async (dispatch) => {
     // validation定義する
