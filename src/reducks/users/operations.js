@@ -1,4 +1,4 @@
-import { signInAction } from './actions';
+import { signInAction, signOutAction } from './actions';
 import { push } from 'connected-react-router';
 // signInやsignUpの時にfirebaseのauthとFirebaseTimestampを使いたいのでimportしておく
 import { auth, db, FirebaseTimestamp } from '../../firebase';
@@ -76,7 +76,9 @@ export const logout = () => {
     // firebaseでサインアウトするためのメソッドがあるのでそれを使う
     auth.signOut()
       .then(() => {
-        dispatch(push('/login'))
+        // firebaseのauthenticateでのサインアウト（auth.signOut()）が完了したら、ReduxのStoreの状態をサインアウト（初期化）する処理を実行する
+        dispatch(signOutAction());
+        dispatch(push('/login'));
       })
   }
 }
