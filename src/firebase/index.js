@@ -15,7 +15,7 @@ export const auth = firebase.auth();
 
 // 同じ感じで、firebaseでよく使う機能は予め定数にしてexportしておく
 export const db = firebase.firestore();
-export const storage = firebase.storage ();
+export const storage = firebase.storage();
 export const functions = firebase.functions();
 
 // railsでいうcreated_atとかに該当する

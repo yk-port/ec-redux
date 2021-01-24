@@ -5,11 +5,12 @@ import { auth, db, FirebaseTimestamp } from '../../firebase';
 
 // 認証リッスンをするための関数
 // もしユーザーが存在していたら、signInActionを動かしてreduxのstateを更新してログインしている扱いにする
-const listenAuthState = () => {
+export const listenAuthState = () => {
   return async (dispatch) => {
     return auth.onAuthStateChanged(user => {
       // userが存在してる 即ち userの認証が完了している
       if (user) {
+        console.log(user);
         const uid = user.uid;
 
         db.collection('users').doc(uid).get()
@@ -33,7 +34,7 @@ const listenAuthState = () => {
   }
 }
 
-export const signIn = (email, password) => {
+export const login = (email, password) => {
   return async (dispatch) => {
     // validation定義する
     if ( email === '' || password === '') {
@@ -73,6 +74,7 @@ export const signUp = (username, email, password, confirmPassword) => {
     // validation定義する
     if ( username === '' || email === '' || password === '' || confirmPassword === '') {
       alert('必須項目が未入力です');
+      // return false とすることで、以降の処理は実行されずに終了する
       return false;
     }
     if ( password !== confirmPassword) {
@@ -85,7 +87,7 @@ export const signUp = (username, email, password, confirmPassword) => {
       .then(result => {
         const user = result.user;
 
-        // もしユーザーが存在したら(ユーザーの作成に成功したら)uidと「いつユーザーが作成されたか」を把握するためにFirebaseTimestampを使って時間を登録する
+        // もしユーザーが存在したら(ユーザーのアカウント登録に成功したら)uidと「いつユーザーが作成されたか」を把握するためにFirebaseTimestampを使って時間を登録する
         if (user) {
           const uid = user.uid;
           const timestamp = FirebaseTimestamp.now();
@@ -95,7 +97,7 @@ export const signUp = (username, email, password, confirmPassword) => {
             uid,
             username,
             email,
-             created_at: timestamp,
+            created_at: timestamp,
             updated_at: timestamp
           };
 

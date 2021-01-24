@@ -1,6 +1,6 @@
 import React from 'react';
 import TextField from "@material-ui/core/TextField";
-import {makeStyles} from "@material-ui/styles";
+import { makeStyles } from "@material-ui/styles";
 
 const useStyles = makeStyles({
   full: {
@@ -30,6 +30,7 @@ const TextInput = (props) => {
       rows={props.rows}
       value={props.value}
       type={props.type}
+      // 親のコンポーネントにInputフィールドが変更した事を伝える関数
       onChange={props.onChange}
     />
   );

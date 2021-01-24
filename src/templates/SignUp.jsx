@@ -16,19 +16,19 @@ const SignUp = () => {
   // 呼び出す時は()をつけない e.q) onChange={inputUsername()} ← ()は不要
   const inputUsername = useCallback((event) => {
     setUsername(event.target.value)
-  },[setUsername]);
+  }, [setUsername]);
 
   const inputEmail = useCallback((event) => {
     setEmail(event.target.value)
-  },[setEmail]);
+  }, [setEmail]);
 
   const inputPassword = useCallback((event) => {
     setPassword(event.target.value)
-  },[setPassword]);
+  }, [setPassword]);
 
   const inputConfirmPassword = useCallback((event) => {
     setConfirmPassword(event.target.value)
-  },[setConfirmPassword]);
+  }, [setConfirmPassword]);
 
   return (
     <div className="c-section-container">

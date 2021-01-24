@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { getWithSignedIn } from './reducks/users/selectors';
 import { listenAuthState } from './reducks/users/operations';
 
-const Auth = ({children }) => {
+const Auth = ({ children }) => {
   const dispatch = useDispatch();
   const selector = useSelector(state => state);
   const isSignedIn = getWithSignedIn(selector);
@@ -19,6 +19,8 @@ const Auth = ({children }) => {
   if (!isSignedIn) {
     return <></>;
   } else {
+    // もしloginしていたら、Authコンポーネントで囲われている子要素（children）のpropsをreturnする
+    // 具体的には、Router.js内で囲っているコンポーネントをreturnする
     return children;
   }
 }
