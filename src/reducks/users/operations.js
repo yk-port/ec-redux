@@ -3,27 +3,38 @@ import { push } from 'connected-react-router';
 // signInやsignUpの時にfirebaseのauthとFirebaseTimestampを使いたいのでimportしておく
 import { auth, db, FirebaseTimestamp } from '../../firebase';
 
-export const signIn = () => {
-  return async (dispatch, getState) => {
-    const state = getState();
-    const isSignedIn = state.users.isSignedIn
-
-    if (!isSignedIn) {
-      const url = 'https://api.github.com/users/yk-port';
-
-      const response = await fetch(url)
-                              .then(res => res.json())
-                              .catch(() => null);
-      const userName = response.login;
-
-      dispatch(signInAction({
-        isSignedIn: true,
-        uid: '0001',
-        userName
-      }));
-
-      dispatch(push('/'))
+export const signIn = (email, password) => {
+  return async (dispatch) => {
+    // validation定義する
+    if ( email === '' || password === '') {
+      alert('必須項目が未入力です');
+      return false;
     }
+
+    // emailとpasswordでログインするfirebaseの機能を使う
+    return auth.signInWithEmailAndPassword(email, password)
+      .then(result => {
+        const user = result.user;
+
+        // もしユーザーが存在したら(ユーザーのログインに成功したら)FirebaseのDBの中にあるユーザーのuidと一致する情報を取得する
+        if (user) {
+          const uid = user.uid;
+
+          db.collection('users').doc(uid).get()
+            .then(snapshot => {
+              const data = snapshot.data();
+
+              dispatch(signInAction({
+                isSignedIn: true,
+                role: data.role,
+                uid,
+                userName: data.username
+              }))
+
+              dispatch(push('/'))
+            })
+        }
+      })
   }
 }
 
