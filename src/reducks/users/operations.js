@@ -3,6 +3,36 @@ import { push } from 'connected-react-router';
 // signInやsignUpの時にfirebaseのauthとFirebaseTimestampを使いたいのでimportしておく
 import { auth, db, FirebaseTimestamp } from '../../firebase';
 
+// 認証リッスンをするための関数
+// もしユーザーが存在していたら、signInActionを動かしてreduxのstateを更新してログインしている扱いにする
+const listenAuthState = () => {
+  return async (dispatch) => {
+    return auth.onAuthStateChanged(user => {
+      // userが存在してる 即ち userの認証が完了している
+      if (user) {
+        const uid = user.uid;
+
+        db.collection('users').doc(uid).get()
+          .then(snapshot => {
+            const data = snapshot.data();
+
+            dispatch(signInAction({
+              isSignedIn: true,
+              role: data.role,
+              uid,
+              userName: data.username
+            }))
+
+            dispatch(push('/'))
+          })
+      } else {
+        // もしユーザーが存在していなかったら 即ち ログインしていなかったら、ログインページにリダイレクトさせる
+        dispatch(push('/login'))
+      }
+    })
+  }
+}
+
 export const signIn = (email, password) => {
   return async (dispatch) => {
     // validation定義する
