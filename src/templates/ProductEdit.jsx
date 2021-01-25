@@ -1,5 +1,5 @@
 import React, { useCallback, useState } from 'react';
-import { TextInput } from '../components/UIkit';
+import { TextInput, SelectBox, PrimaryButton } from '../components/UIkit';
 
 const ProductEdit = () => {
   const [name, setName] = useState(''),
@@ -22,11 +22,24 @@ const ProductEdit = () => {
     setPrice(event.target.value)
   }, [setPrice]);
 
+  // 親コンポーネントでカテゴリーの要素を配列で定義しておく
+  const categories = [
+    { id: 'tops', name: 'トップス' },
+    { id: 'shirts', name: 'シャツ' },
+    { id: 'pants', name: 'パンツ' },
+  ];
+
+  const genders = [
+    { id: 'all', name: 'すべて' },
+    { id: 'male', name: 'メンズ' },
+    { id: 'female', name: 'レディース' },
+  ];
+
   return (
     <section>
       <h2 className="u-text__headline u-text-center">商品の登録・編集</h2>
       <div className="c-section-container">
-        <ImageArea images={images} setImages={setImages} />
+        {/* <ImageArea images={images} setImages={setImages} /> */}
         <TextInput
           fullWidth={true} label={"商品名"} multiline={false} required={true}
           onChange={inputName} rows={1} value={name} type={"text"}
@@ -46,7 +59,7 @@ const ProductEdit = () => {
           onChange={inputPrice} rows={1} value={price} type={"number"}
         />
         <div className="module-spacer--small"/>
-        <SetSizesArea sizes={sizes} setSizes={setSizes} />
+        {/* <SetSizesArea sizes={sizes} setSizes={setSizes} /> */}
         <div className="module-spacer--small" />
         <div className="center">
           <PrimaryButton
