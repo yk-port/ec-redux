@@ -83,6 +83,24 @@ export const logout = () => {
   }
 }
 
+export const resetPassword = (email) => {
+  return async (dispatch) => {
+    if (email === '') {
+      alert('必須項目が未入力です');
+      return false;
+    } else {
+      // firebaseの既存のメソッドで、パスワードリセットするメソッドを使う
+      auth.sendPasswordResetEmail(email)
+        .then(() => {
+          alert('入力されたアドレスにパスワードリセット用のメールをお送りしました。');
+          dispatch(push('/login'))
+        }).catch(() => {
+          alert('パスワードリセットに失敗しました。');
+        })
+    }
+  }
+}
+
 export const signUp = (username, email, password, confirmPassword) => {
   return async (dispatch) => {
     // validation定義する
