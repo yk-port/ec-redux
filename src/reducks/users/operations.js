@@ -62,8 +62,6 @@ export const login = (email, password) => {
                 uid,
                 userName: data.username
               }))
-
-              dispatch(push('/'))
             })
         }
       })
