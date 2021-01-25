@@ -11,7 +11,6 @@ export const listenAuthState = () => {
     return auth.onAuthStateChanged(user => {
       // userが存在してる 即ち userの認証が完了していれば、ユーザーの情報を取得してReduxのStoreの値を更新する
       if (user) {
-
         const uid = user.uid;
 
         db.collection('users').doc(uid).get()
@@ -24,8 +23,6 @@ export const listenAuthState = () => {
               uid,
               userName: data.username
             }))
-
-            dispatch(push('/'))
           })
       } else {
         // もしユーザーが存在していなかったら 即ち ユーザーが認証されていなかったら、ログインページにリダイレクトさせる
