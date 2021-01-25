@@ -4,6 +4,9 @@ const initialState = {
     role: '',
     uid: '',
     userName: ''
+  },
+  products: {
+    list: [],
   }
 };
 
