@@ -11,6 +11,7 @@ const ProductEdit = () => {
         [description, setDescription] = useState(''),
         [category, setCategory] = useState(''),
         [gender, setGender] = useState(''),
+        [images, setImages] = useState([]),
         [price, setPrice] = useState('');
 
   // useCallbackを使って関数をメモ化する
