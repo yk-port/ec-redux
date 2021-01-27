@@ -6,7 +6,7 @@ import { db, FirebaseTimestamp } from '../../firebase';
 const productsRef = db.collection('products');
 
 // テンプレート内で「商品を保存する」ためのイベントボタンがクリックされた時の処理
-export const saveProduct = (name, description, category, gender, price) => {
+export const saveProduct = (name, description, category, gender, price, images) => {
   return async (dispatch) => {
     const timestamp = FirebaseTimestamp.now();
 
@@ -14,6 +14,7 @@ export const saveProduct = (name, description, category, gender, price) => {
       category,
       description,
       gender,
+      images,
       name,
       // 値を10進数の数値型にする処理
       price: parseInt(price, 10),

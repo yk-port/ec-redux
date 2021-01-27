@@ -14,6 +14,21 @@ const useStyles = makeStyles({
 
 const ImageArea = (props) => {
   const classes = useStyles();
+  const images = props.images;
+
+  const deleteImage = useCallback(async (id) => {
+    // 選択した時の真偽値を入力
+    const ret = window.confirm('この画像を削除しますか？');
+    if (!ret) {
+      return false;
+    // 削除する場合の処理
+    } else {
+      const newImages = images.filter(image => image.id !== id);
+      props.setImages(newImages);
+      // delete()でStorageから削除する処理
+      return storage.ref('images').child(id).delete();
+    }
+  }, [images]);
 
   const uploadImage = useCallback((event) => {
     // 画像をアップした時に、どのファイルがアップされ方を取得する時は event.target.files で取得できる
@@ -48,14 +63,14 @@ const ImageArea = (props) => {
           props.setImages((prevState => [...prevState, newImage]))
         });
     })
-  }, [props.setImages])
+  }, [images])
 
   return (
     <div>
       <div className="p-grid__list-images">
         {
           props.images.length > 0 && props.images.map(image => (
-            <ImagePreview id={image.id} path={image.path} key={image.id} /> )
+            <ImagePreview delete={deleteImage} id={image.id} path={image.path} key={image.id} /> )
           )
         }
       </div>
