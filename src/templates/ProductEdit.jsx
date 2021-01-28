@@ -2,7 +2,7 @@ import React, { useCallback, useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { TextInput, SelectBox, PrimaryButton } from '../components/UIkit';
 import { saveProduct } from '../reducks/products/operations';
-import ImageArea from '../components/Product/ImageArea';
+import ImageArea from '../components/Products/ImageArea';
 import { db } from '../firebase';
 
 const ProductEdit = () => {
