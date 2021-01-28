@@ -12,7 +12,8 @@ const Router = () => {
 
       <Auth>
         <Route exact path={"(/)?"} component={Home}></Route>
-        <Route exact path={"/product/edit"} component={ProductEdit}></Route>
+        {/* 正規表現を使って、/idがあればそのidに紐付いた画面を表示して、/idがなければ/product/editに該当する画面を表示する */}
+        <Route path={"/product/edit(/:a)?"} component={ProductEdit}></Route>
       </Auth>
     </Switch>
   )
