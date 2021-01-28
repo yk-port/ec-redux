@@ -6,7 +6,7 @@ import { db, FirebaseTimestamp } from '../../firebase';
 const productsRef = db.collection('products');
 
 // テンプレート内で「商品を保存する」ためのイベントボタンがクリックされた時の処理
-export const saveProduct = (id, name, description, category, gender, price, images) => {
+export const saveProduct = (id, name, description, category, gender, price, images, sizes) => {
   return async (dispatch) => {
     const timestamp = FirebaseTimestamp.now();
 
@@ -16,6 +16,7 @@ export const saveProduct = (id, name, description, category, gender, price, imag
       gender,
       images,
       name,
+      sizes,
       // 値を10進数の数値型にする処理
       price: parseInt(price, 10),
       updated_at: timestamp
@@ -25,7 +26,7 @@ export const saveProduct = (id, name, description, category, gender, price, imag
     if (id === '') {
       const ref = productsRef.doc();
       // 保存したいプロダクトが新規で発生した時のみ、idの採番と保存された日時を登録する
-      const id = ref.id;
+      id = ref.id;
       data.id = id;
       data.created_at = timestamp;
     }

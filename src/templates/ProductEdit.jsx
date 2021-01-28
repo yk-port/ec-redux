@@ -2,7 +2,7 @@ import React, { useCallback, useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { TextInput, SelectBox, PrimaryButton } from '../components/UIkit';
 import { saveProduct } from '../reducks/products/operations';
-import ImageArea from '../components/Products/ImageArea';
+import { ImageArea, SetSizesArea } from "../components/Products";
 import { db } from '../firebase';
 
 const ProductEdit = () => {
@@ -19,7 +19,8 @@ const ProductEdit = () => {
         [category, setCategory] = useState(''),
         [gender, setGender] = useState(''),
         [images, setImages] = useState([]),
-        [price, setPrice] = useState('');
+        [price, setPrice] = useState(''),
+        [sizes, setSizes] = useState([]);
 
   // useCallbackを使って関数をメモ化する
   // 親で定義したメソッド・関数を子コンポーネントで使う時は、パフォーマンスを向上する観点でuseCallbackを使う
@@ -60,6 +61,7 @@ const ProductEdit = () => {
           setCategory(data.categories);
           setGender(data.gender);
           setPrice(data.price);
+          setSizes(data.sizes);
         })
     }
   }, [id]);
@@ -88,12 +90,12 @@ const ProductEdit = () => {
           onChange={inputPrice} rows={1} value={price} type={"number"}
         />
         <div className="module-spacer--small"/>
-        {/* <SetSizesArea sizes={sizes} setSizes={setSizes} /> */}
+        <SetSizesArea sizes={sizes} setSizes={setSizes} />
         <div className="module-spacer--small" />
         <div className="center">
           <PrimaryButton
             label={"商品情報を保存"}
-            onClick={() => dispatch(saveProduct(id, name, description, category, gender, price, images))}
+            onClick={() => dispatch(saveProduct(id, name, description, category, gender, price, images, sizes))}
           />
         </div>
       </div>
