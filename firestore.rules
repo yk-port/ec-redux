@@ -8,7 +8,7 @@ service cloud.firestore {
       allow delete: if request.auth.uid == userId;
     }
 
-    match /product/{productId} {
+    match /products/{productId} {
       allow read: if request.auth.uid != null;
       allow write: if request.auth.uid != null;
     }

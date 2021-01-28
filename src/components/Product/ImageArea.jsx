@@ -28,6 +28,7 @@ const ImageArea = (props) => {
       // delete()でStorageから削除する処理
       return storage.ref('images').child(id).delete();
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [images]);
 
   const uploadImage = useCallback((event) => {
@@ -63,6 +64,7 @@ const ImageArea = (props) => {
           props.setImages((prevState => [...prevState, newImage]))
         });
     })
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [images])
 
   return (
