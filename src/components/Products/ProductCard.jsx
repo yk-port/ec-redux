@@ -5,6 +5,8 @@ import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
 import Typography from '@material-ui/core/Typography';
 import NoImage from '../../assets/img/src/no_image.png'
+import { push } from 'connected-react-router';
+import { useDispatch } from 'react-redux';
 
 // makeStylesでthemeを使う時→アプリ全体で管理しているmaterialUIのテーマ（色とかフォントサイズとかブレイクポイントとか）を↓
 // 変更したい時はthemeを引数に取る ※部分的にcssを摘要したいときは引数にthemeを指定しなくてOK
@@ -60,6 +62,7 @@ const useStyles = makeStyles((theme) => ({
 
 const ProductCard = (props) => {
   const classes = useStyles();
+  const dispatch = useDispatch();
 
   const images = props.images.length > 0 ?
                  props.images :
@@ -73,9 +76,10 @@ const ProductCard = (props) => {
       <CardMedia
         className={classes.media}
         image={images[0].path}
+        onClick={() => dispatch(push('products/' + props.id))}
       />
       <CardContent className={classes.content}>
-        <div>
+        <div onClick={() => dispatch(push('products/' + props.id))}>
           <Typography className={classes.productName} color="textSecondary" component="p">
             {props.name}
           </Typography>
