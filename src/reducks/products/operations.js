@@ -5,6 +5,22 @@ import { db, FirebaseTimestamp } from '../../firebase';
 // Firebaseのproductsコレクションに対してメソッドを使うことが多くなるので、予めproductsRefという名前で定数として用意しておく
 const productsRef = db.collection('products');
 
+
+export const fetchProducts = () => {
+  return async (dispatch) => {
+    // Queryを投げる時に並び替えをしてくれるメソッド（第一引数は並び替える時のkeyを指定、第二引数は降順か昇順かの指定）
+    productsRef.orderBy('updated_at', 'desc').get()
+      .then(snapshots => {
+        const productList = [];
+        snapshots.forEach(snapshot => {
+          const product = snapshot.data();
+          productList.push(product);
+        })
+        dispatch(fetchProductsAction(productList));
+      })
+  }
+};
+
 // テンプレート内で「商品を保存する」ためのイベントボタンがクリックされた時の処理
 export const saveProduct = (id, name, description, category, gender, price, images, sizes) => {
   return async (dispatch) => {
