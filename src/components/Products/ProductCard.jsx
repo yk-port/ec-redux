@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
@@ -7,6 +7,11 @@ import Typography from '@material-ui/core/Typography';
 import NoImage from '../../assets/img/src/no_image.png'
 import { push } from 'connected-react-router';
 import { useDispatch } from 'react-redux';
+import IconButton from "@material-ui/core/IconButton";
+import MoreVertIcon from '@material-ui/icons/MoreVert';
+import Menu from "@material-ui/core/Menu";
+import MenuItem from "@material-ui/core/MenuItem";
+import { deleteProduct } from '../../reducks/products/operations';
 
 // makeStylesでthemeを使う時→アプリ全体で管理しているmaterialUIのテーマ（色とかフォントサイズとかブレイクポイントとか）を↓
 // 変更したい時はthemeを引数に取る ※部分的にcssを摘要したいときは引数にthemeを指定しなくてOK
@@ -64,6 +69,18 @@ const ProductCard = (props) => {
   const classes = useStyles();
   const dispatch = useDispatch();
 
+  const [anchorEl, setAnchorEl] = useState(null);
+
+  // ドロワーメニューをクリックしたらanchorElの値を変えてメニューを開く
+  const handleClick = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  // ドロワーメニューをクリックしたらメニューを閉じる
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+
   const images = props.images.length > 0 ?
                  props.images :
                  [NoImage];
@@ -87,6 +104,32 @@ const ProductCard = (props) => {
             ¥{price}
           </Typography>
         </div>
+        <IconButton onClick={handleClick}>
+          <MoreVertIcon />
+        </IconButton>
+        <Menu
+          anchorEl={anchorEl}
+          keepMounted
+          open={Boolean(anchorEl)}
+          onClose={handleClose}
+        >
+          <MenuItem
+            onClick={() => {
+              dispatch(push('/product/edit/' + props.id))
+              handleClose()
+            }}
+          >
+            編集する
+          </MenuItem>
+          <MenuItem
+            onClick={() => {
+              dispatch(deleteProduct(props.id))
+              handleClose()
+            }}
+          >
+            削除する
+          </MenuItem>
+        </Menu>
       </CardContent>
     </Card>
   )

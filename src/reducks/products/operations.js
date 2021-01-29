@@ -1,11 +1,22 @@
 import { push } from 'connected-react-router';
 // firebaseのdbとFirebaseTimestampを使いたいのでimportしておく
 import { db, FirebaseTimestamp } from '../../firebase';
-import { fetchProductsAction } from './actions';
+import { fetchProductsAction, deleteProductAction } from './actions';
 
 // Firebaseのproductsコレクションに対してメソッドを使うことが多くなるので、予めproductsRefという名前で定数として用意しておく
 const productsRef = db.collection('products');
 
+export const deleteProduct = (id) => {
+  return async (dispatch, getState) => {
+    productsRef.doc(id).delete()
+      .then(() => {
+        // 現在のstoreの情報をgetState関数で取得する
+        const prevProducts = getState().products.list;
+        const nextProducts = prevProducts.filter(product => product.id !== id)
+        dispatch(deleteProductAction(nextProducts));
+      })
+  }
+}
 
 export const fetchProducts = () => {
   return async (dispatch) => {
