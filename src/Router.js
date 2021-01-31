@@ -12,8 +12,10 @@ const Router = () => {
 
       <Auth>
         <Route exact path={"(/)?"} component={ProductList}></Route>
+        {/* :idとするとこで、動的にルーティングが設定できる。exactを付与しないと正しくパスが設定できないので注意 */}
+        <Route exact path={"/product/:id"} component={ProductEdit}></Route>
         {/* 正規表現を使って、/idがあればそのidに紐付いた画面を表示して、/idがなければ/product/editに該当する画面を表示する */}
-        <Route path={"/product/edit(/:a)?"} component={ProductEdit}></Route>
+        <Route path={"/product/edit(/:id)?"} component={ProductEdit}></Route>
       </Auth>
     </Switch>
   )
