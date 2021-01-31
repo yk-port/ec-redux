@@ -2,37 +2,49 @@ import React, { useEffect, useCallback, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { db } from '../firebase';
 import {makeStyles} from "@material-ui/styles";
+import HTMLReactParser from 'html-react-parser';
 
 const useStyles = makeStyles((theme) => ({
   sliderBox: {
       [theme.breakpoints.down('sm')]: {
-          margin: '0 auto 24px auto',
-          height: 320,
-          width: 320
+        margin: '0 auto 24px auto',
+        height: 320,
+        width: 320
       },
       [theme.breakpoints.up('sm')]: {
-          margin: '0 auto',
-          height: 400,
-          width: 400
+        margin: '0 auto',
+        height: 400,
+        width: 400
       },
   },
   detail: {
       textAlign: 'left',
       [theme.breakpoints.down('sm')]: {
-          margin: '0 auto 16px auto',
-          height: 320,
-          width: 320
+        margin: '0 auto 16px auto',
+        height: 320,
+        width: 320
       },
       [theme.breakpoints.up('sm')]: {
-          margin: '0 auto',
-          height: 'auto',
-          width: 400
+        margin: '0 auto',
+        height: 'auto',
+        width: 400
       },
   },
   price: {
-      fontSize: 36
+    fontSize: 36
   }
 }))
+
+// 改行したらbrタグを入れる独自関数
+const returnCodeToBr = (text) => {
+  if (text === '') {
+    return text
+  } else {
+    // HTMLタグをReactコンポーネント内で使えるようにする関数
+    // npm i --save html-react-parserをしたあとにHTMLReactParserが使える
+    return HTMLReactParser(text.replace(/\r?\n/g, '<br />'))
+  }
+}
  
 const ProductDetail = () => {
   const classes = useStyles()
